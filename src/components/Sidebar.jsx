@@ -1,7 +1,7 @@
 import styles from "./Sidebar.module.scss";
 import { PencilLine } from "phosphor-react";
 
-export function Sidebar() {
+export default function Sidebar() {
   return (
     <aside className={styles.sidebar}>
       <img
