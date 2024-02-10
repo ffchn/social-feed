@@ -28,6 +28,13 @@ export default function Post(props) {
           excepturi.
         </p>
       </div>
+
+      <form className={styles.commentForm}>
+        <strong>Say something!</strong>
+        <textarea placeholder="Hooray!" />
+
+        <button type="submit">Send</button>
+      </form>
     </article>
   );
 }
