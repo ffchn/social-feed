@@ -2,7 +2,7 @@ import { Post } from "./Post";
 import { Header } from "./components/Header";
 import { Sidebar } from "./components/Sidebar";
 
-import styles from "./App.module.css";
+import styles from "./App.module.scss";
 
 import "./global.css";
 
