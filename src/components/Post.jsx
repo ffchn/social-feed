@@ -1,21 +1,29 @@
 import Avatar from "./Avatar";
 import Comment from "./Comment";
 import styles from "./Post.module.scss";
+import { format, formatDistanceToNow } from "date-fns";
 
-export default function Post() {
+export default function Post({ author, content, publishedAt }) {
+  const formattedPublishedDate = format(publishedAt, "MMMM d, yyyy @ hh:MMa");
+
+  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt);
+
   return (
     <article className={styles.post}>
       <header className={styles.header}>
         <div className={styles.author}>
-          <Avatar src="https://picsum.photos/300" />
+          <Avatar src={author.avatarUrl} />
           <div className={styles.authorInfo}>
-            <strong>Filipe Franchini</strong>
-            <span>Software Engineer</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
 
-        <time title="Feb 10 2024 " dateTime="2024-02-10 12:00:00">
-          Published 1h ago
+        <time
+          title={formattedPublishedDate}
+          dateTime={publishedAt.toISOString()}
+        >
+          {publishedDateRelativeToNow} ago
         </time>
       </header>
 
