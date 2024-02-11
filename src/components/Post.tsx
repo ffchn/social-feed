@@ -2,24 +2,33 @@ import Avatar from "./Avatar";
 import Comment from "./Comment";
 import styles from "./Post.module.scss";
 import { format, formatDistanceToNow } from "date-fns";
-import { useState } from "react";
+import { FormEvent, ChangeEvent, useState } from "react";
 
-interface IPost {
-  author: {
-    avatarUrl: String,
-    name: String,
-    role: String
-  },
-  content: String,
-  publishedAt: Date
+interface PostProps {
+  author: Author;
+  content: String;
+  publishedAt: Date;
 }
 
-export default function Post({ author, content, publishedAt }: IPost) {
+interface Author {
+  avatarUrl: String;
+  name: String;
+  role?: String;
+}
+
+interface Comment {
+  id: number;
+  author: Author;
+  content: String;
+  publishedAt: Date;
+}
+
+export default function Post({ author, content, publishedAt }: PostProps) {
   const formattedPublishedDate = format(publishedAt, "MMMM d, yyyy @ hh:MMa");
 
   const publishedDateRelativeToNow = formatDistanceToNow(publishedAt);
 
-  const [commentList, setCommentList] = useState([]);
+  const [commentList, setCommentList] = useState<Comment[]>([]);
   const [textarea, setTextarea] = useState("");
 
   const currentUser = {
@@ -27,7 +36,7 @@ export default function Post({ author, content, publishedAt }: IPost) {
     name: "Filipe Franchini",
   };
 
-  function handlePushNewComment(e) {
+  function handlePushNewComment(e: FormEvent) {
     e.preventDefault();
     if (textarea.length <= 2) {
       return;
@@ -43,13 +52,13 @@ export default function Post({ author, content, publishedAt }: IPost) {
     setTextarea("");
   }
 
-  function handleTextAreaInput(e) {
+  function handleTextAreaInput(e: ChangeEvent<HTMLTextAreaElement>) {
     setTextarea(e.target.value);
   }
 
-  function deleteComment(commentId) {
+  function deleteComment(commentId: Number) {
     const newCommentArray = commentList.filter(
-      (comment) => comment.id !== commentId
+      (comment: Comment) => comment.id !== commentId
     );
     setCommentList(newCommentArray);
   }
@@ -75,8 +84,10 @@ export default function Post({ author, content, publishedAt }: IPost) {
         </time>
       </header>
 
-      <div className={styles.content} dangerouslySetInnerHTML={{__html: content}}>
-      </div>
+      <div
+        className={styles.content}
+        dangerouslySetInnerHTML={{ __html: content }}
+      ></div>
 
       <form className={styles.commentForm} onSubmit={handlePushNewComment}>
         <strong>Say something!</strong>
@@ -95,12 +106,13 @@ export default function Post({ author, content, publishedAt }: IPost) {
 
       {commentList.length >= 1 && (
         <div className={styles.commentList}>
-          {commentList.map(({ id, content, author }) => (
+          {commentList.map(({ id, content, author, publishedAt }) => (
             <Comment
               id={id}
               key={id}
               content={content}
               author={author}
+              publishedAt={publishedAt}
               onDeleteComment={deleteComment}
             />
           ))}

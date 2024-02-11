@@ -1,5 +1,9 @@
 import styles from "./Avatar.module.scss";
 
-export default function Avatar({ src }) {
+interface AvatarProps {
+  src: string;
+}
+
+export default function Avatar({ src }: AvatarProps) {
   return <img src={src} alt="" className={styles.avatar} />;
 }

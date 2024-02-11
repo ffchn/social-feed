@@ -2,6 +2,19 @@ import { ThumbsUp, Trash } from "phosphor-react";
 import styles from "./Comment.module.scss";
 import Avatar from "./Avatar";
 import { useState } from "react";
+import { format, formatDistanceToNow } from "date-fns";
+
+interface CommentProps {
+  id: number;
+  content: string;
+  author: {
+    avatarUrl: string;
+    name: string;
+    role?: string;
+  };
+  publishedAt: Date;
+  onDeleteComment: (commentId: Number) => void;
+}
 
 export default function Comment({
   id,
@@ -9,7 +22,11 @@ export default function Comment({
   author,
   publishedAt,
   onDeleteComment,
-}) {
+}: CommentProps) {
+  const formattedPublishedDate = format(publishedAt, "MMMM d, yyyy @ hh:MMa");
+
+  const publishedDateRelativeToNow = formatDistanceToNow(publishedAt);
+
   function handleDeleteComment() {
     onDeleteComment(id);
   }
@@ -29,8 +46,11 @@ export default function Comment({
           <div className={styles.commentHeader}>
             <div className={styles.commentInfo}>
               <strong>{author.name}</strong>
-              <time title="Feb 10 2024 " dateTime="2024-02-10 12:00:00">
-                1 hour ago
+              <time
+                title={formattedPublishedDate}
+                dateTime={publishedAt.toISOString()}
+              >
+                {publishedDateRelativeToNow} ago
               </time>
             </div>
 
