@@ -2,16 +2,16 @@ import { ThumbsUp, Trash } from "phosphor-react";
 import styles from "./Comment.module.scss";
 import Avatar from "./Avatar";
 
-export default function Comment() {
+export default function Comment({ content, author, publishedAt }) {
   return (
     <div className={styles.comment}>
-      <Avatar src="https://picsum.photos/200" />
+      <Avatar src={author.avatarUrl} />
 
       <div className={styles.commentBox}>
         <div className={styles.commentContent}>
           <div className={styles.commentHeader}>
             <div className={styles.commentInfo}>
-              <strong>Filipe F</strong>
+              <strong>{author.name}</strong>
               <time title="Feb 10 2024 " dateTime="2024-02-10 12:00:00">
                 1 hour ago
               </time>
@@ -21,7 +21,7 @@ export default function Comment() {
               <Trash size={24} />
             </button>
           </div>
-          <p>Lorem ipsum dolor sit amet.</p>
+          <p>{content}</p>
         </div>
 
         <div className={styles.commentActions}>

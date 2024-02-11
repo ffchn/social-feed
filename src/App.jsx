@@ -49,12 +49,12 @@ function App() {
       <div className={styles.wrapper}>
         <Sidebar />
         <main>
-          {posts.map((post) => (
+          {posts.map(({ id, author, content, publishedAt }) => (
             <Post
-              author={post.author}
-              key={post.id}
-              content={post.content}
-              publishedAt={post.publishedAt}
+              author={author}
+              key={id}
+              content={content}
+              publishedAt={publishedAt}
             />
           ))}
         </main>
