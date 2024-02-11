@@ -35,6 +35,13 @@ export default function Post({ author, content, publishedAt }) {
     setTextarea(e.target.value);
   }
 
+  function deleteComment(commentId) {
+    const newCommentArray = commentList.filter(
+      (comment) => comment.id !== commentId
+    );
+    setCommentList(newCommentArray);
+  }
+
   return (
     <article className={styles.post}>
       <header className={styles.header}>
@@ -71,6 +78,7 @@ export default function Post({ author, content, publishedAt }) {
         <textarea
           placeholder="Hooray!"
           name="comment"
+          required
           value={textarea}
           onChange={handleTextAreaInput}
         />
@@ -81,7 +89,13 @@ export default function Post({ author, content, publishedAt }) {
       {commentList.length >= 1 && (
         <div className={styles.commentList}>
           {commentList.map(({ id, content, author }) => (
-            <Comment key={id} content={content} author={author} />
+            <Comment
+              id={id}
+              key={id}
+              content={content}
+              author={author}
+              onDeleteComment={deleteComment}
+            />
           ))}
         </div>
       )}
