@@ -1,11 +1,13 @@
+import Avatar from "./Avatar";
+import Comment from "./Comment";
 import styles from "./Post.module.scss";
 
-export default function Post(props) {
+export default function Post() {
   return (
     <article className={styles.post}>
       <header className={styles.header}>
         <div className={styles.author}>
-          <img src="https://github.com/ffchn.png" alt="" />
+          <Avatar src="https://picsum.photos/300" />
           <div className={styles.authorInfo}>
             <strong>Filipe Franchini</strong>
             <span>Software Engineer</span>
@@ -35,6 +37,11 @@ export default function Post(props) {
 
         <button type="submit">Send</button>
       </form>
+
+      <div className={styles.commentList}>
+        <Comment />
+        <Comment />
+      </div>
     </article>
   );
 }
