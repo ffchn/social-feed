@@ -19,7 +19,9 @@ export default function Post({ author, content, publishedAt }) {
 
   function handlePushNewComment(e) {
     e.preventDefault();
-    if (textarea.length <= 2) return;
+    if (textarea.length <= 2) {
+      return;
+    }
 
     const newCommentObject = {
       id: commentList.length + 1,
@@ -41,6 +43,8 @@ export default function Post({ author, content, publishedAt }) {
     );
     setCommentList(newCommentArray);
   }
+
+  const isTextAreaEmpty = textarea.length <= 3;
 
   return (
     <article className={styles.post}>
@@ -83,7 +87,9 @@ export default function Post({ author, content, publishedAt }) {
           onChange={handleTextAreaInput}
         />
 
-        <button type="submit">Send</button>
+        <button type="submit" disabled={isTextAreaEmpty}>
+          Send
+        </button>
       </form>
 
       {commentList.length >= 1 && (

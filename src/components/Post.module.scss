@@ -108,13 +108,18 @@
     cursor: pointer;
     transition-duration: 0.3s;
 
-    &:hover {
+    &:hover:not(:disabled) {
       background-color: var(--green-300);
     }
 
     &:focus {
       outline: transparent;
       box-shadow: 0 0 0 2px var(--green-300);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
   }
 }
