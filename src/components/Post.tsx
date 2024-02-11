@@ -4,7 +4,17 @@ import styles from "./Post.module.scss";
 import { format, formatDistanceToNow } from "date-fns";
 import { useState } from "react";
 
-export default function Post({ author, content, publishedAt }) {
+interface IPost {
+  author: {
+    avatarUrl: String,
+    name: String,
+    role: String
+  },
+  content: String,
+  publishedAt: Date
+}
+
+export default function Post({ author, content, publishedAt }: IPost) {
   const formattedPublishedDate = format(publishedAt, "MMMM d, yyyy @ hh:MMa");
 
   const publishedDateRelativeToNow = formatDistanceToNow(publishedAt);
@@ -65,16 +75,7 @@ export default function Post({ author, content, publishedAt }) {
         </time>
       </header>
 
-      <div className={styles.content}>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-          excepturi. <a href="">click here</a>
-        </p>
-
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
-          excepturi.
-        </p>
+      <div className={styles.content} dangerouslySetInnerHTML={{__html: content}}>
       </div>
 
       <form className={styles.commentForm} onSubmit={handlePushNewComment}>
