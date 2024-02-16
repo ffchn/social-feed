@@ -4,26 +4,32 @@ import styles from "./Post.module.scss";
 import { format, formatDistanceToNow } from "date-fns";
 import { FormEvent, ChangeEvent, useState } from "react";
 
-interface PostProps {
+export interface PostType {
+  id: number;
   author: Author;
-  content: String;
+  content: string;
   publishedAt: Date;
 }
 
 interface Author {
-  avatarUrl: String;
-  name: String;
-  role?: String;
+  avatarUrl: string;
+  name: string;
+  role?: string;
 }
 
 interface Comment {
   id: number;
   author: Author;
-  content: String;
+  content: string;
   publishedAt: Date;
 }
 
-export default function Post({ author, content, publishedAt }: PostProps) {
+interface PostProps {
+  post: PostType;
+}
+
+export default function Post({ post }: PostProps) {
+  const { publishedAt, author, content } = post;
   const formattedPublishedDate = format(publishedAt, "MMMM d, yyyy @ hh:MMa");
 
   const publishedDateRelativeToNow = formatDistanceToNow(publishedAt);
